@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "hellobuildapp117a2adf": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

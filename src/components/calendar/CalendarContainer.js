@@ -84,7 +84,7 @@ export default function CalendarContainer() {
 
   return (
     <div>
-      <h1>Calendar container</h1>
+      <h1 className="mt-12 md:mt-0">Google Calendar</h1>
       <div className="absolute top-6">
         {isSignedIn ? (
           <Button onClick={handleSignoutClick}>Sign Out</Button>

@@ -18,6 +18,7 @@ export const GET_GITHUB_REPOSITORIES = gql`
     viewer {
       repositories(last: 20) {
         nodes {
+          id
           url
           createdAt
           forkCount

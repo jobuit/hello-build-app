@@ -1,22 +1,56 @@
+import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import moment from "moment";
 import { GET_GITHUB_REPOSITORIES } from "../../graphql/queries";
+import { formatWordToFilter } from "../../utils/helpers/format";
 
 function GithubRepositories() {
   const { data } = useQuery(GET_GITHUB_REPOSITORIES);
+  const [filter, setFilter] = useState("");
+  const [repositories, setRepositories] = useState([]);
+
   console.log(data);
+
+  useEffect(() => {
+    const reposit = data?.viewer?.repositories?.nodes;
+    const repos = reposit.filter((item) => {
+      const n = formatWordToFilter(item.name).indexOf(
+        formatWordToFilter(filter)
+      );
+      if (n >= 0) {
+        return true;
+      }
+      return false;
+    });
+    setRepositories(repos);
+  }, [filter, data]);
+
   return (
     <div>
       <h2>Your repositories</h2>
+      <div className="flex justify-end w-full">
+        <div class="flex mb-3 justify-between shadow rounded-full px-2 items-center">
+          <input
+            value={filter}
+            type="search"
+            class=" border-0 px-1 my-2 outline-none"
+            placeholder="Search repository..."
+            onChange={(e) => setFilter(e.target.value)}
+          />
+          <p>
+            <i class="fas fa-search" />
+          </p>
+        </div>
+      </div>
       <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
-        {data?.viewer?.repositories?.nodes.map((item, i) => (
-          <div className="shadow p-4 relative flex flex-col" key={i}>
+        {repositories.map((item) => (
+          <div className="shadow p-4 relative flex flex-col" key={item.id}>
             <div className="justify-between flex">
               <p className="cursor-pointer">
                 <i class="fas fa-star" />
               </p>
               <p className="text-xs">
-                {moment(item.createdAt).format("MMMM Do YYYY, h:mm:ss")}
+                {moment(item.createdAt).format("MMMM Do YYYY")}
               </p>
             </div>
             <div className="mb-3">

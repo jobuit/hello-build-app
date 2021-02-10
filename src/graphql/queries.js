@@ -26,6 +26,7 @@ export const GET_GITHUB_REPOSITORIES = gql`
           updatedAt
           sshUrl
           name
+          stargazerCount
           collaborators {
             nodes {
               name

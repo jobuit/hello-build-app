@@ -3,21 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.9",
     "@aws-amplify/ui-react": "^0.2.38",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "aws-amplify": "^3.3.18",
+    "moment": "^2.29.1",
+    "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "npm run watch:css && react-scripts start",
+    "build": "NODE_ENV=production npm run watch:css && react-scripts build",
+    "test": "react-scripts test --watchAll=false",
+    "test:coverage": "npm test -- --coverage --colors",
+    "test:watch": "react-scripts test --watch",
+    "test:update": "npm test --updateSnapshot",
+    "eject": "react-scripts eject",
+    "watch:css": "postcss src/assets/scss/tailwind.scss -o src/assets/scss/main.scss",
+    "lint": "eslint --ext .jsx,.js src"
   },
   "eslintConfig": {
     "extends": [
@@ -36,5 +44,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9",
+    "postcss": "^8.2.5",
+    "postcss-cli": "^8.3.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

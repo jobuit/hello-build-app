@@ -1,10 +1,18 @@
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import GithubRepositories from "./components/github/GithubRepositories";
+import Sidebar from "./components/sidebar/Sidebar";
 
-const App = () => (
-  <div>
-    <AmplifySignOut />
-    My App
-  </div>
-);
+function App() {
+  return (
+    <div className="flex justify-center">
+      <div className="container flex">
+        <Sidebar />
+        <div className="p-4 w-full">
+          <GithubRepositories />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default withAuthenticator(App);

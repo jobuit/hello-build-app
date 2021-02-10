@@ -14,7 +14,7 @@ var DISCOVERY_DOCS = [
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+var SCOPES = "https://www.googleapis.com/auth/calendar";
 
 export default function CalendarContainer() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -74,7 +74,13 @@ export default function CalendarContainer() {
     setEvents(events);
   }
 
-  console.log(events);
+  const deleteEvent = async (event) => {
+    await gapi.client.calendar.events.delete({
+      eventId: event.id,
+      calendarId: "primary",
+    });
+    listUpcomingEvents();
+  };
 
   return (
     <div>
@@ -86,7 +92,7 @@ export default function CalendarContainer() {
           <Button onClick={handleSignInClick}>Sign In</Button>
         )}
       </div>
-      <CalendarEvents events={events} />
+      <CalendarEvents events={events} gapi={gapi} deleteEvent={deleteEvent} />
     </div>
   );
 }

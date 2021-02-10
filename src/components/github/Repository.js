@@ -29,9 +29,9 @@ function Repository({ repository, refetch }) {
       <div className="justify-between flex">
         <p className="cursor-pointer" onClick={() => handleFav()}>
           {repository.stargazerCount ? (
-            <i class="fas fa-star" />
+            <i className="fas fa-star" />
           ) : (
-            <i class="far fa-star" />
+            <i className="far fa-star" />
           )}
         </p>
         <p className="text-xs">

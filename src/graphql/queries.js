@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const GET_GITHUB_USER_INFO = gql`
   query {
     viewer {
+      id
       avatarUrl
       email
       name
@@ -29,6 +30,7 @@ export const GET_GITHUB_REPOSITORIES = gql`
           stargazerCount
           collaborators {
             nodes {
+              id
               name
               avatarUrl
               email

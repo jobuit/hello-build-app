@@ -1,19 +1,17 @@
-export const addStarRepository = `
-mutation AddStarRepository {
-    addStar(input: {
-      starrableId: "MDEwOlJlcG9zaXRvcnkxNDUwMjg5Mzk=", 
-      clientMutationId: "MDQ6VXNlcjI4MjAxMDc5"}) {
+import { gql } from "@apollo/client";
+
+export const ADD_FAV_REPOSITORY = gql`
+  mutation AddStarToIssue($repoId: ID!, $userId: String!) {
+    addStar(input: { starrableId: $repoId, clientMutationId: $userId }) {
       clientMutationId
     }
   }
 `;
 
-export const removeStarRepository = `
-mutation RemoveStarRepository {
-    removeStar(input: {
-        starrableId: "MDEwOlJlcG9zaXRvcnkxNDUwMjg5Mzk=", 
-        clientMutationId: "MDQ6VXNlcjI4MjAxMDc5"}) {
-        clientMutationId
-      }
+export const REMOVE_FAV_REPOSITORY = gql`
+  mutation RemoveStarRepository($repoId: ID!, $userId: String!) {
+    removeStar(input: { starrableId: $repoId, clientMutationId: $userId }) {
+      clientMutationId
+    }
   }
 `;

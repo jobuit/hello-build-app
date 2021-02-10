@@ -6,7 +6,7 @@ import Repository from "./Repository";
 import SearchRepository from "./SearchRepository";
 
 function GithubRepositories() {
-  const { data } = useQuery(GET_GITHUB_REPOSITORIES);
+  const { data, refetch } = useQuery(GET_GITHUB_REPOSITORIES);
   const [filter, setFilter] = useState("");
   const [repositories, setRepositories] = useState([]);
   const [favRepositories, setFavRepositories] = useState([]);
@@ -38,7 +38,7 @@ function GithubRepositories() {
       <h2>Favorite repositories</h2>
       <div className="grid gap-4 md:grid-cols-2 grid-cols-1 mb-8">
         {favRepositories?.map((item) => (
-          <Repository repository={item} />
+          <Repository key={item.id} repository={item} refetch={refetch} />
         ))}
       </div>
       <h2>Your repositories</h2>
@@ -47,7 +47,7 @@ function GithubRepositories() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
         {repositories?.map((item) => (
-          <Repository repository={item} />
+          <Repository key={item.id} repository={item} refetch={refetch} />
         ))}
       </div>
     </div>

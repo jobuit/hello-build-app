@@ -1,10 +1,33 @@
 import moment from "moment";
+import { useMutation } from "@apollo/client";
+import { ADD_FAV_REPOSITORY, REMOVE_FAV_REPOSITORY } from "../../graphql/mutations";
+import { useContext, useEffect } from "react";
+import GithubUserContext from "../../context/github/GithubUserContext";
 
-function Repository({ repository }) {
+function Repository({ repository, refetch }) {
+  const [addFav, { data }] = useMutation(ADD_FAV_REPOSITORY);
+  const [removeFav, { data: dataRemove }] = useMutation(REMOVE_FAV_REPOSITORY);
+  const { user } = useContext(GithubUserContext);
+
+  useEffect(() => {
+    if (data || dataRemove) {
+      refetch();
+    }
+  }, [data, dataRemove, refetch]);
+
+  const handleFav = () => {
+    console.log("repository", repository);
+    if (repository.stargazerCount) {
+      removeFav({ variables: { repoId: repository.id, userId: user.id } });
+    } else {
+      addFav({ variables: { repoId: repository.id, userId: user.id } });
+    }
+  };
+
   return (
     <div className="shadow p-4 relative flex flex-col" key={repository.id}>
       <div className="justify-between flex">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer" onClick={() => handleFav()}>
           {repository.stargazerCount ? (
             <i class="fas fa-star" />
           ) : (
@@ -41,7 +64,7 @@ function Repository({ repository }) {
         </div>
         <div className="flex">
           {repository?.collaborators?.nodes.map((collaborator) => (
-            <div className="w-5 h-5 relative mb-4">
+            <div className="w-5 h-5 relative mb-4" key={collaborator.id}>
               <div className="group w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer">
                 <img
                   src={collaborator.avatarUrl}

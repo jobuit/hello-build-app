@@ -16,7 +16,6 @@ function Repository({ repository, refetch }) {
   }, [data, dataRemove, refetch]);
 
   const handleFav = () => {
-    console.log("repository", repository);
     if (repository.stargazerCount) {
       removeFav({ variables: { repoId: repository.id, userId: user.id } });
     } else {
@@ -25,11 +24,11 @@ function Repository({ repository, refetch }) {
   };
 
   return (
-    <div className="shadow p-4 relative flex flex-col" key={repository.id}>
+    <div className="shadow-lg p-4 relative flex flex-col" key={repository.id}>
       <div className="justify-between flex">
         <p className="cursor-pointer" onClick={() => handleFav()}>
           {repository.stargazerCount ? (
-            <i className="fas fa-star" />
+            <i className="fas fa-star text-yellow-400" />
           ) : (
             <i className="far fa-star" />
           )}
@@ -39,7 +38,7 @@ function Repository({ repository, refetch }) {
         </p>
       </div>
       <div className="mb-3">
-        <a href={repository.url} target="_blank" rel="noreferrer">
+        <a className="font-semibold" href={repository.url} target="_blank" rel="noreferrer">
           {repository.name}
         </a>
         <p className="text-xs truncate">{repository.sshUrl}</p>
@@ -64,7 +63,7 @@ function Repository({ repository, refetch }) {
         </div>
         <div className="flex">
           {repository?.collaborators?.nodes.map((collaborator) => (
-            <div className="w-5 h-5 relative mb-4" key={collaborator.id}>
+            <div className="w-6 h-6 relative mb-4" key={collaborator.id}>
               <div className="group w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer">
                 <img
                   src={collaborator.avatarUrl}

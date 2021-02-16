@@ -2,7 +2,7 @@ import moment from "moment";
 
 export default function CalendarEvent({ event, deleteEvent }) {
   return (
-    <div className="shadow p-4 relative flex flex-col">
+    <div className="shadow-lg p-4 relative flex flex-col">
       <p
         onClick={() => deleteEvent(event)}
         className="cursor-pointer absolute right-6"
